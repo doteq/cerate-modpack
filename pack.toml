@@ -1,0 +1,13 @@
+name = "doteq's modpack"
+author = "doteq"
+version = "1.0.0"
+pack-format = "packwiz:1.1.0"
+
+[index]
+file = "index.toml"
+hash-format = "sha256"
+hash = "8e3a134718217abc8c95c32fbca24680aa29f88fe98b6d01764f790348f61d2b"
+
+[versions]
+minecraft = "1.21.1"
+neoforge = "21.1.221"
