@@ -1,0 +1,64 @@
+name: Release MRPack
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - pack.toml
+      - index.toml
+      - mods/**
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.25.x"
+
+      - name: Install packwiz
+        run: go install github.com/packwiz/packwiz@latest
+
+      - name: Read version from pack.toml
+        id: pack
+        shell: bash
+        run: |
+          set -euo pipefail
+          PACK_VERSION="$(awk -F'"' '/^version = /{print $2; exit}' pack.toml)"
+          if [[ -z "${PACK_VERSION}" ]]; then
+            echo "Failed to read version from pack.toml" >&2
+            exit 1
+          fi
+          echo "version=${PACK_VERSION}" >> "${GITHUB_OUTPUT}"
+          echo "tag=v${PACK_VERSION}" >> "${GITHUB_OUTPUT}"
+          echo "asset=modpack-${PACK_VERSION}.mrpack" >> "${GITHUB_OUTPUT}"
+
+      - name: Build mrpack
+        run: |
+          "$(go env GOPATH)/bin/packwiz" modrinth export --output "${{ steps.pack.outputs.asset }}"
+
+      - name: Create or update release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.pack.outputs.tag }}
+          VERSION: ${{ steps.pack.outputs.version }}
+          ASSET: ${{ steps.pack.outputs.asset }}
+        run: |
+          set -euo pipefail
+          if gh release view "${TAG}" >/dev/null 2>&1; then
+            gh release upload "${TAG}" "${ASSET}" --clobber
+            gh release edit "${TAG}" --title "Modpack ${VERSION}"
+          else
+            gh release create "${TAG}" "${ASSET}" --title "Modpack ${VERSION}" --generate-notes
+          fi
