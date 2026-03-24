@@ -1,6 +1,14 @@
 hash-format = "sha256"
 
 [[files]]
+file = "config/cristellib/dungeons_arise/structure_placement_config.json5"
+hash = "5a34460b08d20378ea7abc44ccdcdb751ea1e22b86c3e1412b97fa8ac1271a66"
+
+[[files]]
+file = "config/cristellib/dungeons_arise_seven_seas/structure_placement_config.json5"
+hash = "fe85ea2cb36d9d6045d8e6c41dc598ed227ec9234eabd4aabd3a97a5109c7a22"
+
+[[files]]
 file = "mods/appleskin.pw.toml"
 hash = "3b5f3feca8b299f947ed3956e49f7c3940793754928f2f99cad936448208a501"
 metafile = true

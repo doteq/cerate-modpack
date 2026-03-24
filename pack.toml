@@ -1,12 +1,12 @@
 name = "cerate"
 author = "doteq"
-version = "1.0.2"
+version = "1.0.3"
 pack-format = "packwiz:1.1.0"
 
 [index]
 file = "index.toml"
 hash-format = "sha256"
-hash = "d9f9d7b8dbec95bc02a3841cc3db5f8e873b25c87d507bb5bbc3b95aa3ef9f39"
+hash = "47a07322b2b51af61a0c8ce2906f49938abce0563618b3133ea66439d6102391"
 
 [versions]
 minecraft = "1.21.1"
