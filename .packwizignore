@@ -1,3 +1,7 @@
 .gitignore
 .github/**
 *.mrpack
+.DS_Store
+docker-compose.yml
+server/**
+backups/**

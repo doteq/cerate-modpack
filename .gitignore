@@ -1,1 +1,6 @@
 *.mrpack
+.DS_Store
+server/*
+!server/.gitkeep
+backups/*
+!backups/.gitkeep
